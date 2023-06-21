@@ -1,0 +1,8 @@
+{
+  "[python]": {
+    "editor.defaultFormatter": "joslarson.black-vscode"
+  },
+  "python.formatting.provider": "none",
+  "black.debug": false,
+  "python.pythonPath": "C:\\Users\\jesus\\AppData\\Local\\Programs\\Python\\Python310\\python.exe"
+}

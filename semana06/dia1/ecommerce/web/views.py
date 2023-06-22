@@ -99,7 +99,7 @@ def agregar_carrito(request, producto_id):
 def eliminar_producto_carrito(request, producto_id):
     carrito_producto = Cart(request)
     carrito_producto.delete(producto_id)
-    
+
     return render(request, "carrito.html")
 
 

@@ -108,3 +108,14 @@ def limpiar_carrito(request):
     carrito_producto.clear()
 
     return render(request, "carrito.html")
+
+
+"""
+-----------------Usuarios y clientes----------------------
+"""
+
+from django.contrib.auth.models import User
+
+
+def crear_usuario(request):
+    return render(request, "login.html")

@@ -13,6 +13,7 @@ class Cart:
             self.cart[producto.id] = {
                 "producto_id": producto.id,
                 "nombre": producto.nombre,
+                "descripcion": producto.descripcion,
                 "cantidad": cantidad,
                 "precio": str(producto.precio),
                 "imagen": producto.imagen.url,
@@ -29,6 +30,11 @@ class Cart:
                     value["subtotal"] = str(nuevo_subtotal)
                     break
         self.save()
+
+    def delete(self, producto_id):
+        if producto_id in self.cart:
+            del self.cart[producto_id]
+            self.save()
 
     def save(self):
         self.session["cart"] = self.cart

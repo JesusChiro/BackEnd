@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 
 from .models import Categoria, Marca, Producto
@@ -115,7 +115,23 @@ def limpiar_carrito(request):
 """
 
 from django.contrib.auth.models import User
+from django.contrib.auth import login
 
 
 def crear_usuario(request):
+    if request.method == "POST":
+        data_usuario = request.POST["usuario"]
+        data_password = request.POST["password"]
+
+        nuevo_usuario = User.objects.create_user(
+            username=data_usuario, password=data_password
+        )
+        if nuevo_usuario is not None:
+            login(request, nuevo_usuario)
+            return redirect('/cuenta')
+
     return render(request, "login.html")
+
+
+def cuenta_usuario(request):
+    return render(request, "cuenta.html")

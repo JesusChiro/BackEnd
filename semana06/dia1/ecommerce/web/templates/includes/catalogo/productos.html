@@ -6,7 +6,11 @@
     <div class="sectgl prod-i">
       <div class="prod-i-top">
         <a class="prod-i-img" href="/producto">
+          {% if producto.imagen %}
           <img src="{{producto.imagen.url}}" alt="" />
+          {% else %}
+          <img src="http://placehold.it/290x258" alt="" />
+          {% endif %}
         </a>
         <div class="prod-i-actions">
           <div class="prod-i-actions-in">

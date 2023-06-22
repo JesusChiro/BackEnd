@@ -41,3 +41,24 @@ def productos_por_marca(request, marca_id):
         "marcas": lista_marcas,
     }
     return render(request, "index.html", context)
+
+
+def productos_por_nombre(request):
+    nombre = request.POST["nombre"]
+    lista_productos = Producto.objects.filter(nombre__icontains=nombre.upper())
+    lista_categorias = Categoria.objects.all()
+    lista_marcas = Marca.objects.all()
+    context = {
+        "productos": lista_productos,
+        "categorias": lista_categorias,
+        "marcas": lista_marcas,
+    }
+    return render(request, "index.html", context)
+
+
+def producto_detalle(request, producto_id):
+    obj_producto = Producto.objects.get(pk=producto_id)
+    context = {
+        "producto": obj_producto,
+    }
+    return render(request, "producto.html", context)

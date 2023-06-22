@@ -9,7 +9,7 @@ urlpatterns = [
     path(
         "categoria/<int:categoria_id>", views.productos_por_categoria, name="categoria"
     ),
-    path(
-        "marca/<int:marca_id>", views.productos_por_marca, name="marca"
-    ),
+    path("marca/<int:marca_id>", views.productos_por_marca, name="marca"),
+    path("busqueda", views.productos_por_nombre, name="busqueda"),
+    path("producto/<int:producto_id>", views.producto_detalle, name="producto"),
 ]

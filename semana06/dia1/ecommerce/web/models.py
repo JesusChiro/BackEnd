@@ -36,6 +36,10 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
+    # def save(self, *args, **kwargs):
+    #     self.nombre = self.nombre.upper()
+    #     super().save(*args, **kwargs)
+
 
 class ProductoImagen(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
@@ -48,3 +52,4 @@ class ProductoImagen(models.Model):
 
     def __str__(self):
         return self.producto.nombre
+

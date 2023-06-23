@@ -1,6 +1,4 @@
-from django.shortcuts import render,redirect
-
-
+from django.shortcuts import render, redirect
 from .models import Categoria, Marca, Producto
 
 
@@ -115,7 +113,7 @@ def limpiar_carrito(request):
 """
 
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 
 
 def crear_usuario(request):
@@ -128,9 +126,28 @@ def crear_usuario(request):
         )
         if nuevo_usuario is not None:
             login(request, nuevo_usuario)
-            return redirect('/cuenta')
+            return redirect("/cuenta")
 
     return render(request, "login.html")
+
+
+def login_usuario(request):
+    context = {}
+    if request.method == "POST":
+        data_usuario = request.POST["usuario"]
+        data_password = request.POST["password"]
+
+        usuario_auth = authenticate(
+            request, username=data_usuario, password=data_password
+        )
+        if usuario_auth is not None:
+            login(request, usuario_auth)
+            return redirect("/cuenta")
+        else:
+            context = {
+                "mensaje": "Datos Incorrectos",
+            }
+    return render(request, "login.html", context)
 
 
 def cuenta_usuario(request):

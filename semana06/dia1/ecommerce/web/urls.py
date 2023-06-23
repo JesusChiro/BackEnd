@@ -21,4 +21,5 @@ urlpatterns = [
     path("auth/register", views.crear_usuario, name="auth_register"),
     path("cuenta", views.cuenta_usuario, name="cuenta"),
     path("auth/login", views.login_usuario, name="auth_login"),
+    path('cliente/act', views.actualizar_cliente, name="cliente_act")
 ]

@@ -114,6 +114,8 @@ def limpiar_carrito(request):
 
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
+from .models import Cliente
+from .forms import ClienteForm
 
 
 def crear_usuario(request):
@@ -150,5 +152,61 @@ def login_usuario(request):
     return render(request, "login.html", context)
 
 
+def actualizar_cliente(request):
+    mensaje = ""
+
+    if request.method == "POST":
+        frm_cliente = ClienteForm(request.POST)
+        if frm_cliente.is_valid():
+            data = frm_cliente.cleaned_data
+
+            # actualizar el usuario
+            act_usuario = User.objects.get(pk=request.user.id)
+            act_usuario.first_name = data["nombre"]
+            act_usuario.last_name = data["apellidos"]
+            act_usuario.email = data["email"]
+            act_usuario.save()
+
+            # registrar cliente
+            new_cliente = Cliente()
+            new_cliente.usuario = act_usuario
+            new_cliente.dni = data["dni"]
+            new_cliente.direccion = data["direccion"]
+            new_cliente.telefono = data["telefono"]
+            new_cliente.fecha_nacimiento = data["fecha_nacimiento"]
+            new_cliente.save()
+
+            mensaje = "Datos actualizados con exito"
+        else:
+            mensaje = "No se pudo actualizar los datos"
+
+        context = {
+            "mensaje": mensaje,
+            "form": frm_cliente,
+        }
+    return render(request, "cuenta.html", context)
+
+
 def cuenta_usuario(request):
-    return render(request, "cuenta.html")
+    try:
+        obj_cliente = Cliente.objects.get(usuario=request.user)
+        data_cliente = {
+            "nombre": request.user.first_name,
+            "apellido": request.user.last_name,
+            "email": request.user.email,
+            "direccion": obj_cliente.direccion,
+            "telefono": obj_cliente.telefono,
+            "dni": obj_cliente.dni,
+            "fecha_nacimiento": obj_cliente.fecha_nacimento,
+        }
+    except:
+        data_cliente = {
+            "nombre": request.user.first_name,
+            "apellido": request.user.last_name,
+            "email": request.user.email,
+        }
+    frm_cliente = ClienteForm(data_cliente)
+    context = {
+        "form": frm_cliente,
+    }
+    return render(request, "cuenta.html", context)

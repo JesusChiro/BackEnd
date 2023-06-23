@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+
+
 from .models import Categoria, Marca, Producto
 
 
@@ -17,7 +19,7 @@ def index(request):
 
 
 """
--------------Catalogo de productos-------------
+-------- CATALOGO DE PRODUCTOS -----------------------
 """
 
 
@@ -72,7 +74,7 @@ def producto_detalle(request, producto_id):
 
 
 """
------------------Carrito de compras----------------------
+-------- CARRITO DE COMPRAS -----------------------
 """
 from .cart import Cart
 
@@ -88,6 +90,7 @@ def agregar_carrito(request, producto_id):
         cantidad = 1
 
     obj_producto = Producto.objects.get(pk=producto_id)
+
     carrito_producto = Cart(request)
     carrito_producto.add(obj_producto, cantidad)
 
@@ -109,52 +112,57 @@ def limpiar_carrito(request):
 
 
 """
------------------Usuarios y clientes----------------------
+-------- USUARIOS Y CLIENTES -----------------------
 """
-
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
+
 from .models import Cliente
 from .forms import ClienteForm
 
 
 def crear_usuario(request):
+    pagina_destino = request.GET.get("next", "/cuenta")
+    context = {"destino": pagina_destino}
     if request.method == "POST":
         data_usuario = request.POST["usuario"]
         data_password = request.POST["password"]
+        data_destino = request.POST["destino"]
 
         nuevo_usuario = User.objects.create_user(
             username=data_usuario, password=data_password
         )
         if nuevo_usuario is not None:
             login(request, nuevo_usuario)
-            return redirect("/cuenta")
+            return redirect(data_destino)
 
-    return render(request, "login.html")
+    return render(request, "login.html", context)
 
 
 def login_usuario(request):
-    context = {}
+    pagina_destino = request.GET.get("next", "/cuenta")
+    context = {"destino": pagina_destino}
     if request.method == "POST":
         data_usuario = request.POST["usuario"]
         data_password = request.POST["password"]
+        data_destino = request.POST["destino"]
 
         usuario_auth = authenticate(
             request, username=data_usuario, password=data_password
         )
         if usuario_auth is not None:
             login(request, usuario_auth)
-            return redirect("/cuenta")
+            return redirect(data_destino)
         else:
-            context = {
-                "mensaje": "Datos Incorrectos",
-            }
+            context = {"destino": pagina_destino, "mensaje": "Datos Incorrectos"}
+
     return render(request, "login.html", context)
 
 
+@login_required(login_url="/auth/login")
 def actualizar_cliente(request):
     mensaje = ""
-
     if request.method == "POST":
         frm_cliente = ClienteForm(request.POST)
         if frm_cliente.is_valid():
@@ -166,6 +174,7 @@ def actualizar_cliente(request):
             act_usuario.last_name = data["apellidos"]
             act_usuario.email = data["email"]
             act_usuario.save()
+
             try:
                 obj_cliente = Cliente.objects.get(usuario=request.user)
                 obj_cliente.dni = data["dni"]
@@ -183,37 +192,56 @@ def actualizar_cliente(request):
                 new_cliente.fecha_nacimiento = data["fecha_nacimiento"]
                 new_cliente.save()
 
-            mensaje = "Datos actualizados con exito"
+            mensaje = "Datos Actualizados con Exito"
         else:
             mensaje = "No se pudo actualizar los datos"
 
-        context = {
-            "mensaje": mensaje,
-            "form": frm_cliente,
-        }
+    context = {"mensaje": mensaje, "form": frm_cliente}
+
     return render(request, "cuenta.html", context)
 
 
+@login_required(login_url="/auth/login")
 def cuenta_usuario(request):
+    data = {}
     try:
         obj_cliente = Cliente.objects.get(usuario=request.user)
         data_cliente = {
             "nombre": request.user.first_name,
-            "apellido": request.user.last_name,
+            "apellidos": request.user.last_name,
             "email": request.user.email,
             "direccion": obj_cliente.direccion,
             "telefono": obj_cliente.telefono,
             "dni": obj_cliente.dni,
-            "fecha_nacimiento": obj_cliente.fecha_nacimento,
+            "fecha_nacimiento": obj_cliente.fecha_nacimiento,
         }
+        data.update(data_cliente)
+
     except:
-        data_cliente = {
-            "nombre": request.user.first_name,
-            "apellido": request.user.last_name,
-            "email": request.user.email,
-        }
-    frm_cliente = ClienteForm(data_cliente)
-    context = {
-        "form": frm_cliente,
-    }
+        if request.user.first_name != "":
+            data.update({"nombre": request.user.first_name})
+
+        if request.user.last_name != "":
+            data.update({"apellidos": request.user.last_name})
+
+        if request.user.email != "":
+            data.update({"email": request.user.last_name})
+
+    print(data)
+    if data == {}:
+        frm_cliente = ClienteForm()
+    else:
+        frm_cliente = ClienteForm(data)
+
+    context = {"form": frm_cliente}
     return render(request, "cuenta.html", context)
+
+
+def logout_usuario(request):
+    logout(request)
+    return redirect("/auth/login")
+
+
+"""
+-------- PEDIDOS -----------------------
+"""

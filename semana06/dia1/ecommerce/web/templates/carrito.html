@@ -25,7 +25,9 @@
                                     <a href="#">{{value.categoria}}</a>
                                 </p>
                                 <h3><a href="#">{{value.nombre}}</a></h3>
-                            </div>
+                            </div><!--
+        No Space
+        -->
                             <div class="prod-li-prices">
                                 <div class="prod-li-price-wrap">
                                     <p>Precio</p>
@@ -44,7 +46,9 @@
                                     <p>SubTotal</p>
                                     <p class="prod-li-total">${{value.subtotal}}</p>
                                 </div>
-                            </div>
+                            </div><!--
+No Space
+-->
                         </div>
                         <div class="prod-li-info">
                             <div class="prod-li-rating-wrap">
@@ -90,7 +94,7 @@
                 </div>
                 <div class="cart-collaterals">
                     <a href="/cart/clear" class="checkout-button button">Limpiar</a>
-                    <a href="#" class="checkout-button button">Realizar Compra</a>
+                    <a href="{% url 'web:pedido' %}" class="checkout-button button">Realizar Compra</a>
                     <div class="order-total">
                         <p class="cart-totals-ttl">Total</p>
                         <p class="cart-totals-val">$510.00</p>

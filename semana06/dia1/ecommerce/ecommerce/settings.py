@@ -32,8 +32,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "web",
+    "paypal.standard.ipn",
     "ckeditor",
-    'django_admin_tailwind',
+    "django_admin_tailwind",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

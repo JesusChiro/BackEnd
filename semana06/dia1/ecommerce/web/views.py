@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 
 from .models import Categoria, Marca, Producto
@@ -245,6 +246,7 @@ def logout_usuario(request):
 """
 -------- PEDIDOS -----------------------
 """
+from paypal.standard.forms import PayPalPaymentsForm
 from .models import Pedido, PedidoDetalle
 
 
@@ -293,7 +295,6 @@ def registrar_pedido(request):
         act_usuario.save()
 
         # registramos o actualizamos el cliente
-
         try:
             obj_cliente = Cliente.objects.get(usuario=request.user)
             obj_cliente.telefono = request.POST["telefono"]
@@ -307,8 +308,7 @@ def registrar_pedido(request):
             obj_cliente.dni = request.POST["dni"]
             obj_cliente.save()
 
-        # registramos el pedido
-
+        # registramos el pdido
         obj_pedido = Pedido()
         obj_pedido.cliente = obj_cliente
         obj_pedido.save()
@@ -327,7 +327,6 @@ def registrar_pedido(request):
             detalle.save()
 
         # actualizar pedido
-
         nro_pedido = (
             "PED" + obj_pedido.fecha_registro.strftime("%Y") + str(obj_pedido.id)
         )
@@ -335,9 +334,43 @@ def registrar_pedido(request):
         obj_pedido.monto_total = total
         obj_pedido.save()
 
-        context = {"pedido": obj_pedido}
+        request.session["pedido_id"] = obj_pedido.id
+
+        # creamos formulario de pago de paypal
+        paypal_dict = {
+            "business": "sb-f55mh26405210@business.example.com",
+            "amount": total,
+            "item_name": "compra de tienda ecommerce nro : " + nro_pedido,
+            "invoice": nro_pedido,
+            "notify_url": request.build_absolute_uri(reverse("paypal-ipn")),
+            "return": request.build_absolute_uri("/pago"),
+            "cancel_return": request.build_absolute_uri("/"),
+        }
+
+        # Create the instance.
+        form = PayPalPaymentsForm(initial=paypal_dict)
+
+        context = {"pedido": obj_pedido, "form": form}
 
         # limpiar el carrito
         carrito.clear()
 
     return render(request, "pedido_confirmado.html", context)
+
+
+def registro_pago(request):
+    paypal_payer_id = request.GET.get("PayerID", None)
+    pedido_id = request.session.get("pedido_id")
+    context = {}
+
+    if paypal_payer_id is not None:
+        obj_pedido = Pedido.objects.get(pk=pedido_id)
+
+        print(obj_pedido)
+        obj_pedido.estado = "2"
+        payer_id = paypal_payer_id
+        obj_pedido.save()
+
+        context = {"pedido": obj_pedido}
+
+    return render(request, "gracias.html", context)

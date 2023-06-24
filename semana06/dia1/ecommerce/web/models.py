@@ -70,15 +70,13 @@ class Cliente(models.Model):
 
 
 class Pedido(models.Model):
-    ESTADO_CHOICES = (
-        ("1", "Solicitado"),
-        ("2", "Pagado"),
-    )
+    ESTADO_CHOICES = (("1", "Solicitado"), ("2", "Pagado"))
 
     cliente = models.ForeignKey(Cliente, on_delete=models.RESTRICT)
     fecha_registro = models.DateTimeField(auto_now_add=True)
     nro_pedido = models.CharField(max_length=20, null=True)
     direccion_envio = models.TextField(null=True)
+    payer_id = models.CharField(max_length=200, null=True)
     monto_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     estado = models.CharField(max_length=1, default="1", choices=ESTADO_CHOICES)
 

@@ -25,4 +25,5 @@ urlpatterns = [
     path("cliente/act", views.actualizar_cliente, name="cliente_act"),
     path("pedido", views.pedido, name="pedido"),
     path("pedido/add", views.registrar_pedido, name="pedido_add"),
+    path("pago", views.registro_pago, name="pago"),
 ]

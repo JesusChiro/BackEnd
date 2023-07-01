@@ -1,9 +1,11 @@
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.db.models.functions import Lower
 
 from .models import (
-    Mesa, Categoria, Plato,Pedido
+    Mesa, Categoria, Plato,
+    Pedido
 )
 
 from .serializers import (
@@ -37,10 +39,12 @@ class CategoriaPlatosView(generics.RetrieveAPIView):
 
 
 class SearchPlatoView(APIView):
+
     def get(self, request, search):
-        data = Plato.objects.filter(plato_nom__contains=search)
+        data = Plato.objects.filter(plato_nom__icontains=search)
         serializer = PlatoSerializer(data, many=True)
         return Response(serializer.data)
+
 
 class PedidoRegisterView(generics.CreateAPIView):
     queryset = Pedido.objects.all()

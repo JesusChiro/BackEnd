@@ -133,10 +133,10 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGIN = True
+CORS_ALLOW_ALL_ORIGINS = True
 
-cloudinary.config( 
-  cloud_name = "dntpcgjdh", 
-  api_key = "269669793396393", 
-  api_secret = "pHDpk4DRps_TY_9gwirEJckbxYM" 
+cloudinary.config(
+    cloud_name="dntpcgjdh",
+    api_key="269669793396393",
+    api_secret="pHDpk4DRps_TY_9gwirEJckbxYM"
 )

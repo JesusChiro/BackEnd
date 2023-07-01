@@ -21,6 +21,7 @@ export const getMesas = () => {
 
 		const endpoint = `${URL_BACKEND}/mesa`;
 		const response = await axios.get(endpoint);
+
 		dispatch({
 			type: SET_MESAS,
 			payload: response.data

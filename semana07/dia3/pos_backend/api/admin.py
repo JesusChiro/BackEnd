@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import (
-    Mesa, Categoria, Plato
+    Mesa,Categoria,Plato
 )
 
 admin.site.register(Mesa)

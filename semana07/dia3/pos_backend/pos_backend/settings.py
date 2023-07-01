@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vflr3u0#ho%i3k9wou(q_)ct5o(%@9g&$irj%q7fwm8l-)6cyx'
+SECRET_KEY = 'django-insecure-%x19c0xiih&16btd)en%!m$#jaqe3m18cjm1r)v9)zv&)#qu&q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -33,8 +33,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'api',
+    'api_auth',
     'rest_framework',
-    'corsheaders',
+    "corsheaders",
     'rest_framework_simplejwt',
     'cloudinary',
     'django.contrib.admin',
@@ -54,7 +55,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -146,5 +147,12 @@ CORS_ALLOW_ALL_ORIGINS = True
 cloudinary.config(
     cloud_name="dntpcgjdh",
     api_key="269669793396393",
-    api_secret="pHDpk4DRps_TY_9gwirEJckbxYM"
+    api_secret="pHDpk4DRps_TY_9gwirEJckbxYM",
+    secure=True,
 )
+
+SIMPLE_JWT = {
+  # It will work instead of the default serializer(TokenObtainPairSerializer).
+  "TOKEN_OBTAIN_SERIALIZER": "api_auth.serializers.LoginSerializer",
+  # ...
+}

@@ -1,32 +1,64 @@
 from rest_framework import serializers
 
 from .models import (
-    Mesa,Categoria,Plato
+    Mesa, Categoria, Plato, Pedido, PedidoPlato
 )
+
 
 class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categoria
         fields = '__all__'
-        
+
+
 class MesaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mesa
         fields = '__all__'
-        
+
+
 class PlatoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plato
         fields = '__all__'
-        
-    def to_representation(self,instance):
+
+    def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['plato_img'] = instance.plato_img.url
         return representation
-    
+
+
 class CategoriaPlatoSerializer(serializers.ModelSerializer):
-    Platos = PlatoSerializer(many=True,read_only=True)
-    
+    Platos = PlatoSerializer(many=True, read_only=True)
+
     class Meta:
         model = Categoria
-        fields = ['categoria_id','categoria_nom','Platos']
+        fields = ['categoria_id', 'categoria_nom', 'Platos']
+
+
+'''
+Serializers para registros de pedidos
+'''
+
+
+class PedidoPlatoSerializerPOST(serializers.ModelSerializer):
+    class Meta:
+        models = PedidoPlato
+        fields = ['plato_id', 'pedidoplato_cant']
+
+
+class PedidoSerializerPOST(serializers.ModelSerializer):
+    pedidosplatos = PedidoPlatoSerializerPOST(many=True)
+
+    class Meta:
+        model = Pedido
+        fields = ['pedido_fetch', 'pedido_nro',
+                  'pedido_est', 'usu_id',
+                  'mesa_id', 'pedidosplatos']
+
+    def create(self, validated_data):
+        lista_pedido_plato = validated_data.pop('pedidoplatos')
+        pedido = Pedido.objects.create(**validated_data)
+        for obj_pedido_plato in lista_pedido_plato:
+            PedidoPlato.objects.create(pedido_id=pedido, **obj_pedido_plato)
+        return pedido

@@ -3,14 +3,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import (
-    Mesa, Categoria, Plato
+    Mesa, Categoria, Plato,Pedido
 )
 
 from .serializers import (
     CategoriaSerializer,
     MesaSerializer,
     PlatoSerializer,
-    CategoriaPlatoSerializer
+    CategoriaPlatoSerializer,
+    PedidoSerializerPOST
 )
 
 
@@ -40,3 +41,7 @@ class SearchPlatoView(APIView):
         data = Plato.objects.filter(plato_nom__contains=search)
         serializer = PlatoSerializer(data, many=True)
         return Response(serializer.data)
+
+class PedidoRegisterView(generics.CreateAPIView):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidoSerializerPOST

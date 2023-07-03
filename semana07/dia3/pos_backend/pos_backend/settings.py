@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import cloudinary
 
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
     'api',
     'api_auth',
     'rest_framework',
-    "corsheaders",
+    'corsheaders',
     'rest_framework_simplejwt',
     'cloudinary',
     'django.contrib.admin',
@@ -152,7 +153,8 @@ cloudinary.config(
 )
 
 SIMPLE_JWT = {
-  # It will work instead of the default serializer(TokenObtainPairSerializer).
-  "TOKEN_OBTAIN_SERIALIZER": "api_auth.serializers.LoginSerializer",
-  # ...
+    # It will work instead of the default serializer(TokenObtainPairSerializer).
+    "TOKEN_OBTAIN_SERIALIZER": "api_auth.serializers.LoginSerializer",
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
+    # ...
 }

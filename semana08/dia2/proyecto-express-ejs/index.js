@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
         },
         {
             titulo: 'Transformers el despertar de las bestias',
-            imagen: 'https://www.america-retail.com/static//2023/06/transformers2.jpg'
+            imagen: 'https://www.infobae.com/new-resizer/P4LoLiDBT9ZcwK8bzA8WP7Y9Vgo=/768x1024/filters:format(webp):quality(85)/cloudfront-us-east-1.images.arcpublishing.com/infobae/FPAVWDUGWBC4HCLQ5QFFPA6VKE.png'
         },
         {
             titulo: 'Flash',

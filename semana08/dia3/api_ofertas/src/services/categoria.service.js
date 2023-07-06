@@ -33,6 +33,32 @@ class CategoriaService {
         const result = await this.getLast()
         return result
     }
+
+    async getById(id) {
+        const sqlGetById = `select ${this.table_name}_id as id,
+                            ${this.table_name}_descripcion as descripcion
+                            from tbl_${this.table_name} where
+                            ${this.table_name}_id = ?`
+
+        const result = await this.db.querySql(sqlGetById, [id])
+        return result
+    }
+
+    async update({ id, data }) {
+        const sqlUpdate = `update tbl_${this.table_name} set
+                           ${this.table_name}_descripcion =?
+                           where ${this.table_name}_id =?`
+        await this.db.querySql(sqlUpdate, [data.descripcion, id])
+        const result = await this.getById(id)
+        return result
+    }
+
+    async delete(id) {
+        const sqlDeleteData = `delete from tbl_${this.table_name}
+                                where ${this.table_name}_id =?`
+        await this.db.querySql(sqlDeleteData, [id])
+        return true
+    }
 }
 
 module.exports = CategoriaService

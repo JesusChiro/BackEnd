@@ -5,7 +5,7 @@ function errorHandler(err, req, res, next) {
     })
 }
 
-function boonErrorHandler(err, req, res, next) {
+function boomErrorHandler(err, req, res, next) {
     if (err.isBoom) {
         const { output } = err
         res.status(output.statusCode).json(output.payload)
@@ -14,4 +14,4 @@ function boonErrorHandler(err, req, res, next) {
         next(err)
     }
 }
-module.exports = { errorHandler, boonErrorHandler }
+module.exports = { errorHandler, boomErrorHandler }

@@ -4,9 +4,10 @@ const morgan = require('morgan')
 const boom = require('@hapi/boom')
 
 const categoriaApi = require('./routes/categoria.routes')
+const usuarioApi = require('./routes/usuario.routes')
 
 //middlewares
-const { errorHandler, boonErrorHandler } = require('./middlewares/error.handler')
+const { errorHandler, boomErrorHandler } = require('./middlewares/error.handler')
 
 const app = express()
 app.use(morgan('combined'))
@@ -21,15 +22,18 @@ app.get('/', (req, res) => {
             'content': 'servidor activo'
         })
     } catch (err) {
-        res.status(500).json(boom.badData('error: ' + err))
+        res.status(500).json(boom.badData('error : ' + err))
     }
+
 })
 
 categoriaApi(app)
+usuarioApi(app)
 
-//error Handlers
-
-app.use(boonErrorHandler)
+//error handlers
+app.use(boomErrorHandler)
 app.use(errorHandler)
+
+
 
 app.listen(config.port, () => console.log('http://localhost:' + config.port))

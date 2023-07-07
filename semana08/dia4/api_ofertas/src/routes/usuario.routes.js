@@ -11,14 +11,24 @@ function usuarioApi(app) {
 
     router.post('/', async function (req, res) {
         const { body: usuario } = req
-        try {
-            const data = await objUsuario.create({ usuario })
-            res.status(201).json({
+        const authUsuario = await objUsuario.authenticate({ usuario })
+        if (authUsuario.id > 0) {
+            const token = jwt.sign(
+                authUsuario,
+                config.jwt_secret,
+                {
+                    expiresIn: '1h'
+                }
+            )
+            res.status(200).json({
                 status: true,
-                content: data
+                content: token
             })
-        } catch (err) {
-            res.status(500).json(boom.badData(err))
+        } else {
+            res.status(401).json({
+                status: false,
+                content: 'datos invalidos'
+            })
         }
     })
 }

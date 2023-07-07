@@ -1,5 +1,11 @@
 const express = require('express')
 const CategoriaService = require('../services/categoria.service')
+const boom = require('@hapi/boom')
+
+//middlewares
+const validatorHandler = require('../middlewares/validator.handler')
+
+const { categoriaSchema } = require('../schemas/categoria.schema')
 
 function categoriaApi(app) {
     const router = express.Router()
@@ -19,20 +25,22 @@ function categoriaApi(app) {
         }
     })
 
-    router.post('/', async function (req, res) {
-        const { body: data } = req
-        console.log(data)
-        try {
-            const newData = await objCategoria.create({ data })
-            console.log(newData)
-            res.status(201).json({
-                status: true,
-                content: newData[0]
-            })
-        } catch (err) {
-            console.log(err)
-        }
-    })
+    router.post('/',
+        validatorHandler(categoriaSchema, 'body'),
+        async function (req, res) {
+            const { body: data } = req
+            console.log(data)
+            try {
+                const newData = await objCategoria.create({ data })
+                console.log(newData)
+                res.status(201).json({
+                    status: true,
+                    content: newData[0]
+                })
+            } catch (err) {
+                console.log(err)
+            }
+        })
 
     router.get('/:id', async function (req, res) {
         const { id } = req.params
@@ -50,7 +58,7 @@ function categoriaApi(app) {
                 })
             }
         } catch (err) {
-            console.log(err)
+            console.error(err)
         }
     })
 
@@ -68,12 +76,11 @@ function categoriaApi(app) {
             } else {
                 res.status(404).json({
                     status: false,
-                    content: 'no se encontró el registro'
+                    content: 'no se encontro el registro'
                 })
             }
         } catch (err) {
-            console.log(err)
-
+            console.error(err)
         }
     })
 
@@ -93,10 +100,12 @@ function categoriaApi(app) {
                     content: 'no hay registros'
                 })
             }
-
         } catch (err) {
-            console.log(err)
+            console.error(err)
         }
     })
+
+
 }
+
 module.exports = categoriaApi

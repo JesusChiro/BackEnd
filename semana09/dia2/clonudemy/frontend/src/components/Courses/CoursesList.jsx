@@ -7,7 +7,7 @@ import CourseCard from "./CourseCard";
 
 const CoursesList = ({ category, filters, isValid }) => {
   const { loading, courses, getCourses } = useCourses(
-    `http://127.0.0.1:5000/curso`
+    `http://127.0.0.1:5000/course`
   );
   const [coursesFiltered, setCoursesFiltered] = useState([]);
 
@@ -19,9 +19,9 @@ const CoursesList = ({ category, filters, isValid }) => {
           return isValid
             ? isValid(valueCourse, value, filter, course)
             : (typeof valueCourse === "string"
-                ? valueCourse
-                : String(valueCourse)
-              ).toLowerCase() === value?.toLowerCase();
+              ? valueCourse
+              : String(valueCourse)
+            ).toLowerCase() === value?.toLowerCase();
         });
       })
     );

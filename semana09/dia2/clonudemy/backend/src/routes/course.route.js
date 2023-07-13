@@ -7,4 +7,8 @@ router.route('/')
     .post(create)
     .get(getAll)
 
+router.route('/:id')
+    .get(getOne)
+    .put(updateOne)
+
 module.exports = router

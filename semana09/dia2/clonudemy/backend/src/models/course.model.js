@@ -39,6 +39,18 @@ const CourseSchema = new Schema({
     price: {
         type: Number,
         required: false
+    },
+    stars: {
+        type: Number,
+        required: false
+    },
+    category: {
+        type: String,
+        required: false
+    },
+    banner: {
+        type: String,
+        required: false
     }
 }, {
     timestamps: false,

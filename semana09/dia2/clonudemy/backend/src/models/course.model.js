@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const CourseSchema = new Schema({
-    id: {
-        type: Number,
-        required: true
-    },
     title: {
         type: String,
         required: true,
@@ -33,7 +29,7 @@ const CourseSchema = new Schema({
         required: false
     },
     level: {
-        type: Number,
+        type: String,
         required: false
     },
     price: {
@@ -51,7 +47,7 @@ const CourseSchema = new Schema({
     banner: {
         type: String,
         required: false
-    }
+    },
 }, {
     timestamps: false,
     versionKey: false

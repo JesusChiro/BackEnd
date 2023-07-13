@@ -35,6 +35,7 @@ userController.auth = async (req, res) => {
                 email: userAuth.email
             }, config.jwt_secret,
                 { expiresIn: '1h' })
+                
             res.status(200).json({
                 'token': token
             })

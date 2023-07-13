@@ -2,12 +2,14 @@ import { FiLock } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 import fromFormDataToJson from "../../utils/fromFormDataToJson";
 import FormAuth from "./FormAuth";
+import { useNavigate } from "react-router-dom";
 
 export const actionRegister = async ({ request }) => {
+  const nav = useNavigate()
   const formData = await request.formData();
   const body = fromFormDataToJson(formData);
   const response = await fetch(
-    "https://apimocha.com/education-platform/auth/register",
+    "http://localhost:5000/user",
     {
       method: "post",
       body: JSON.stringify(body),
@@ -16,6 +18,9 @@ export const actionRegister = async ({ request }) => {
       },
     }
   );
+  if (response.status === 200) {
+    localStorage.setItem("token", data)
+  }
   const data = await response.json();
   return data;
 };

@@ -19,9 +19,9 @@ const CoursesList = ({ category, filters, isValid }) => {
           return isValid
             ? isValid(valueCourse, value, filter, course)
             : (typeof valueCourse === "string"
-                ? valueCourse
-                : String(valueCourse)
-              ).toLowerCase() === value?.toLowerCase();
+              ? valueCourse
+              : String(valueCourse)
+            ).toLowerCase() === value?.toLowerCase();
         });
       })
     );

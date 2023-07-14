@@ -1,7 +1,7 @@
 import { BsFillPenFill } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
 
-const MenuEdit = ({ handleUpdate = () => {}, handleDelete = () => {} }) => {
+const MenuEdit = ({ handleUpdate = () => { }, handleDelete = () => { } }) => {
   return (
     <ul className="menu menu--course menu--edit">
       <li className="menu__item menu__item--edit">

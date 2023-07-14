@@ -5,13 +5,16 @@
   padding: 1rem;
   width: 100%;
   box-sizing: border-box;
+
   &__main {
     @include flex-fd-jc-ai-g(column, center, center, 0.5rem);
   }
+
   &__score {
     margin: 0;
     font-size: 5rem;
   }
+
   &__subtitle {
     margin: 0;
     color: #2c5282;

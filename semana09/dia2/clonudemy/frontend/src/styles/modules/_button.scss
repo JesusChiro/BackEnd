@@ -2,11 +2,13 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+
   &--menu-open {
     @include tablet {
       display: none;
     }
   }
+
   &--select {
     padding: 1rem;
     border-radius: 0.25rem;
@@ -23,6 +25,7 @@
     @include flex-fd-jc-ai-g(row, space-between, center, 0.8rem);
     transition: box-shadow 0.25s, border-radius 0.25s;
   }
+
   &--basket {
     background-color: #fed7d7;
     border-radius: 50%;
@@ -30,6 +33,7 @@
     height: 2.15rem;
     @include flex-fd-jc-ai-g(row, center, center);
   }
+
   &--start-course {
     text-decoration: none;
     color: #fff;
@@ -38,6 +42,7 @@
     padding: 0.5rem;
     border-radius: 0.25rem;
   }
+
   &--topic {
     background-color: #fff;
     color: #666;
@@ -54,12 +59,14 @@
       box-shadow: 0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.1),
         0 0.125rem 0.25rem -0.025rem rgba(0, 0, 0, 0.06);
     }
+
     & .line {
       width: 0.0625rem;
       background-color: #666;
       height: 0.8rem;
       position: relative;
       transition: height 0.25s;
+
       &::before {
         content: "";
         inset: 0;
@@ -71,14 +78,17 @@
         background-color: #666;
       }
     }
+
     &-open {
       border-radius: 0.25rem 0.25rem 0 0;
       box-shadow: 0 0px 0.25rem 0px rgba(0, 0, 0, 0.12);
+
       .line {
         height: 0rem;
       }
     }
   }
+
   &--form,
   &--form-course {
     background-color: #2a41e8;
@@ -89,9 +99,11 @@
     border-radius: 0.25rem;
     box-shadow: 0 0.25rem 0.75rem rgba(42, 65, 232, 0.15);
     transition: transform 0.25s;
+
     &:active {
       transform: scale(0.95);
     }
+
     @include tablet {
       margin-left: auto;
     }
@@ -99,6 +111,7 @@
 
   &--form-course {
     flex: 100%;
+
     @include tablet {
       margin-left: 0;
     }
@@ -128,13 +141,16 @@
 
     border-radius: 50%;
     transition: transform 0.25s;
+
     &:active {
       transform: scale(0.95);
     }
   }
+
   &--edit {
     background-color: rgb(86, 228, 116);
   }
+
   &--delete {
     background-color: rgb(228, 88, 86);
   }
@@ -142,9 +158,11 @@
   &__text {
     @include flex-fd-jc-ai-g(row, flex-start, center, 0.25rem);
   }
+
   &__arrow {
     transition: transform 0.25s;
     @include flex-fd-jc-ai-g(row, center, center);
+
     &--open {
       transform: rotate(180deg);
     }

@@ -5,7 +5,7 @@ import FormAuth from "./FormAuth";
 import { useNavigate } from "react-router-dom";
 
 export const actionRegister = async ({ request }) => {
-  
+
   const formData = await request.formData();
   const body = fromFormDataToJson(formData);
   const response = await fetch(

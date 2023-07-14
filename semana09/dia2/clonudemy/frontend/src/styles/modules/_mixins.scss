@@ -1,29 +1,28 @@
 @use "sass:meta";
 @use "sass:map";
 
-@mixin flex-fd-jc-ai-g(
-  $flex-direction: row,
+@mixin flex-fd-jc-ai-g($flex-direction: row,
   $justify-content: flex-start,
   $align-items: stretch,
-  $gap: 0
-) {
+  $gap: 0) {
   display: flex;
   justify-content: $justify-content;
   flex-direction: $flex-direction;
   align-items: $align-items;
-  @if (meta.type-of($gap) == "number" or meta.type-of($gap) == "string") {
+
+  @if (meta.type-of($gap)=="number" or meta.type-of($gap)=="string") {
     gap: $gap;
-  } @else {
+  }
+
+  @else {
     gap: map.get($gap, "y") map.get($gap, "x");
   }
 }
 
-@mixin animation-nm-ts-dr-tf(
-  $name,
+@mixin animation-nm-ts-dr-tf($name,
   $times: 1,
   $duration: 0.3s,
-  $timing-function: linear
-) {
+  $timing-function: linear) {
   animation: $name $times $duration $timing-function;
 }
 

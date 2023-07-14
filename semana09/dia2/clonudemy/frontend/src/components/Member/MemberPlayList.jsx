@@ -13,7 +13,7 @@ const MemberPlayList = ({ videos }) => {
         <h2>Video Gallery</h2>
         <ul style={styles.videoList}>
           {videos.map((video, index) => (
-             <li
+            <li
               key={index}
               style={styles.videoItem}
               onClick={() => handleVideoClick(video.code)}
@@ -42,35 +42,35 @@ const MemberPlayList = ({ videos }) => {
 };
 
 const styles = {
-    container: {
-      display: 'flex',
-      height: '100vh',
-    },
-    sidebar: {
-      width: '250px',
-      background: '#f2f2f2',
-      padding: '20px',
-    },
-    videoList: {
-      listStyleType: 'none',
-      padding: 0,
-      margin: 0,
-    },
-    videoItem: {
-      cursor: 'pointer',
-      marginBottom: '10px',
-      padding: '5px',
-      borderRadius: '5px',
-      background: '#fff',
-    },
-    videoPlayer: {
-      flex: 1,
-      background: '#000',
-      display: 'flex',
-      height: '500px',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  };
+  container: {
+    display: 'flex',
+    height: '100vh',
+  },
+  sidebar: {
+    width: '250px',
+    background: '#f2f2f2',
+    padding: '20px',
+  },
+  videoList: {
+    listStyleType: 'none',
+    padding: 0,
+    margin: 0,
+  },
+  videoItem: {
+    cursor: 'pointer',
+    marginBottom: '10px',
+    padding: '5px',
+    borderRadius: '5px',
+    background: '#fff',
+  },
+  videoPlayer: {
+    flex: 1,
+    background: '#000',
+    display: 'flex',
+    height: '500px',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+};
 
 export default MemberPlayList;

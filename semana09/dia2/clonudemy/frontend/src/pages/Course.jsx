@@ -10,7 +10,7 @@ import AnimatedOutlet from "../components/shared/AnimatedOutlet";
 export const loaderCourse = ({ request, params }) => {
   const url = new URL(request.url);
   const id = url.pathname.split("/").at(-1);
-  console.log('id : ',id)
+  console.log('id : ', id)
   url.pathname += "/overview";
   if (id === params.id) return redirect(url);
   return null;

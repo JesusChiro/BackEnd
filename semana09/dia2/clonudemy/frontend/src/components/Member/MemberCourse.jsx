@@ -9,7 +9,7 @@ import MemberPlayList from "./MemberPlayList";
 export const loaderCourse = ({ request, params }) => {
   const url = new URL(request.url);
   const id = url.pathname.split("/").at(-1);
-  console.log('id : ',id)
+  console.log('id : ', id)
   url.pathname += "/overview";
   if (id === params.id) return redirect(url);
   return null;
@@ -17,33 +17,20 @@ export const loaderCourse = ({ request, params }) => {
 
 const MemberCourse = () => {
   const { id } = useParams();
-  const [course, setCourse] = useState({});
+  const [videos, setVideos] = useState({});
   const [loading, setLoading] = useState(true);
   const location = useLocation();
 
   const getCourse = async () => {
-    const response = await fetch(`http://localhost:5000/course/${id}`);
+    const response = await fetch(`http://127.0.0.1:5000/video/course/${id}`);
     const data = await response.json();
-    setCourse(data);
+    setVideos(data);
     setLoading(false);
   };
   useEffect(() => {
     getCourse();
   }, []);
 
-  const videos = [
-    {
-      videoId: 'CwLHf_gcECY',
-      title: 'Video 1 Title',
-      description: 'Video 1 Description',
-    },
-    {
-      videoId: '9Z4BYWKP-mk',
-      title: 'Video 2 Title',
-      description: 'Video 2 Description',
-    },
-    // Add more videos here...
-  ];
 
   return (
     <AnimatePresence>

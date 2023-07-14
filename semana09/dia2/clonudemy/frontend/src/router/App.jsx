@@ -21,6 +21,9 @@ import AdminCourses from "../components/Admin/AdminCourses";
 import AdminAuthor from "../components/Admin/AdminAuthor";
 import AdminLevels from "../components/Admin/AdminLevels";
 import AdminCategories from "../components/Admin/AdminCategories";
+import Member from "../pages/Member";
+import MemberCourses from "../components/Member/MemberCourses";
+import MemberCourse from "../components/Member/MemberCourse";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -48,6 +51,10 @@ const App = () => {
           <Route path="author" element={<AdminAuthor />} />
           <Route path="levels" element={<AdminLevels />} />
           <Route path="categories" element={<AdminCategories />} />
+        </Route>
+        <Route path="member" element={<Member />}>
+          <Route path="courses" element={<MemberCourses />} />
+          <Route path="course/:id" element={<MemberCourse />} />
         </Route>
       </Route>
     )

@@ -2,20 +2,20 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
-    email: {
+    email: { 
         type: String,
         required: true,
         match: /.+\@.+\..+/,
         unique: true
     },
-    password: {
+    password:{
         type: String,
-        require: true,
-        minlenght: 4
+        require:true,
+        minlength:4
     }
-}, {
-    timestamps: false,
-    versionKey: false
+},{
+    timestamps:false,
+    versionKey:false
 })
 
-module.exports = mongoose.model('users', UserSchema)
+module.exports = mongoose.model('users',UserSchema)

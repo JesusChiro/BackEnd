@@ -1,11 +1,10 @@
 import { redirect, useLocation, useParams } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
-import CourseNav from "../components/Course/CourseNav";
-import CoursesHero from "../components/Course/CourseHero";
+import CoursesHero from "../../components/Course/CourseHero";
 import { useEffect, useState } from "react";
-import Spinner from "../components/shared/Spinner";
-import AnimatedOutlet from "../components/shared/AnimatedOutlet";
+import Spinner from "../../components/shared/Spinner";
+import MemberPlayList from "./MemberPlayList";
 
 export const loaderCourse = ({ request, params }) => {
   const url = new URL(request.url);
@@ -16,7 +15,7 @@ export const loaderCourse = ({ request, params }) => {
   return null;
 };
 
-const Course = () => {
+const MemberCourse = () => {
   const { id } = useParams();
   const [course, setCourse] = useState({});
   const [loading, setLoading] = useState(true);
@@ -31,6 +30,21 @@ const Course = () => {
   useEffect(() => {
     getCourse();
   }, []);
+
+  const videos = [
+    {
+      videoId: 'CwLHf_gcECY',
+      title: 'Video 1 Title',
+      description: 'Video 1 Description',
+    },
+    {
+      videoId: '9Z4BYWKP-mk',
+      title: 'Video 2 Title',
+      description: 'Video 2 Description',
+    },
+    // Add more videos here...
+  ];
+
   return (
     <AnimatePresence>
       {loading ? (
@@ -70,23 +84,14 @@ const Course = () => {
           }}
           className="main main--course"
         >
-          <CoursesHero course={course} />
-          <CourseNav />
-          <AnimatePresence mode="popLayout">
-            <motion.section
-              className="section"
-              key={location.key}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 50 }}
-            >
-              <AnimatedOutlet value={course} />
-            </motion.section>
-          </AnimatePresence>
+
+          <div>
+            <MemberPlayList videos={videos} />
+          </div>
         </motion.main>
       )}
     </AnimatePresence>
   );
 };
 
-export default Course;
+export default MemberCourse;

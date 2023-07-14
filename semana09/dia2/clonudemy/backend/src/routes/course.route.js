@@ -1,14 +1,14 @@
-const { Router } = require('express')
+const {Router} = require('express')
 const router = Router()
 
-const { create, getAll, getOne, updateOne } = require('../controllers/course.controller')
+const {create,getAll,getOne,updateOne} = require('../controllers/course.controller')
 
 router.route('/')
-    .post(create)
-    .get(getAll)
+.post(create)
+.get(getAll)
 
 router.route('/:id')
-    .get(getOne)
-    .put(updateOne)
+.get(getOne)
+.put(updateOne)
 
 module.exports = router

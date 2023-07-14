@@ -5,7 +5,7 @@ import FormAuth from "./FormAuth";
 import { useNavigate } from "react-router-dom";
 
 export const actionRegister = async ({ request }) => {
-  const nav = useNavigate()
+  
   const formData = await request.formData();
   const body = fromFormDataToJson(formData);
   const response = await fetch(
@@ -18,14 +18,13 @@ export const actionRegister = async ({ request }) => {
       },
     }
   );
-  if (response.status === 200) {
-    localStorage.setItem("token", data)
-  }
   const data = await response.json();
-  return data;
+  window.location.href = "/auth/login";
+  return data
 };
 
 const Register = () => {
+  const nav = useNavigate()
   const inputs = [
     {
       Icon: HiOutlineMail,
